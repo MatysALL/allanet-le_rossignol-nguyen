@@ -3,12 +3,15 @@ package fr.l2info.model;
 import fr.l2info.enums.Direction;
 import fr.l2info.enums.MovementResult;
 
+import java.util.Random;
+
 public class Taquin {
     private final int size;
-    private final Piece[][] pieces = {};
+    private final Piece[][] pieces;
 
     public Taquin(int size) {
         this.size = size;
+        pieces = new Piece[size][size];
         int i = -1;
 
         for (int x = 0; x < size; x++) {
@@ -19,7 +22,7 @@ public class Taquin {
     }
 
     public MovementResult tryMovement(int x, int y, Direction direction) {
-        if(x + direction.getX() > size || y + direction.getY() > size) {
+        if(x + direction.getX() >= size || y + direction.getY() >= size) {
             return MovementResult.OverGrid;
         }
 
@@ -58,5 +61,62 @@ public class Taquin {
         int i = from.getValeur();
         from.setValeur(to.getValeur());
         to.setValeur(i);
+    }
+
+    public void mix() {
+        Random rn = new Random();
+        int moves = rn.nextInt(size - 500) + 250;
+        mix(moves);
+    }
+
+    public void mix(int moves) {
+        Random rn = new Random();
+        int i = 0;
+
+        int x = 0;
+        int y = 0;
+
+        while (i < moves) {
+            Direction direction = Direction.values()[rn.nextInt(Direction.values().length)];
+
+            if(tryMovement(x, y, direction) == MovementResult.Success) {
+                i++;
+                x += direction.getX();
+                y += direction.getY();
+            }
+        }
+    }
+
+    @Deprecated
+    public void mixOld(int moves) {
+        Random rn = new Random();
+
+        int i = 0;
+        int tries = 0;
+        while (i < moves && tries < 1000) {
+            int x = rn.nextInt(size - 1);
+            int y = rn.nextInt(size - 1);
+            Direction direction = Direction.values()[rn.nextInt(Direction.values().length)];
+
+            System.out.println(x + " " + y + " " + direction);
+
+            if(tryMovement(x, y, direction) == MovementResult.Success) {
+                i++;
+            }
+
+            tries++;
+        }
+    }
+
+    public String toAsciiTable() {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                sb.append(pieces[i][j].getValeur()).append(" ");
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
     }
 }
