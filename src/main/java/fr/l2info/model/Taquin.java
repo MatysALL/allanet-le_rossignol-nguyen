@@ -9,6 +9,9 @@ public class Taquin {
     private final int size;
     private final Piece[][] pieces;
 
+    private int xHole;
+    private int yHole;
+
     public Taquin(int size) {
         this.size = size;
         pieces = new Piece[size][size];
@@ -19,6 +22,10 @@ public class Taquin {
                 pieces[x][y] = new Piece(i++);
             }
         }
+    }
+
+    public MovementResult tryMovement(Direction direction) {
+        return tryMovement(xHole, yHole, direction);
     }
 
     public MovementResult tryMovement(int x, int y, Direction direction) {
@@ -112,9 +119,23 @@ public class Taquin {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                sb.append(pieces[i][j].getValeur()).append(" ");
+                sb.append(pieces[i][j].getValeur()).append("\t");
             }
             sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    public String toAsciiTableV2() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n-------------------\n");
+        for(int i = 0; i < size; i++) {
+            sb.append("| ");
+            for(int j = 0; j < size; j++) {
+                sb.append(pieces[i][j].getValeur()).append("\t| ");
+            }
+            sb.append("\n-------------------\n");
         }
 
         return sb.toString();
