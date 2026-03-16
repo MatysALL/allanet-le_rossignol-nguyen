@@ -29,27 +29,27 @@ public class Taquin {
     }
 
     public MovementResult tryMovement(int x, int y, Direction direction) {
-        if(x + direction.getX() >= size || y + direction.getY() >= size) {
+        if (x + direction.getX() >= size || y + direction.getY() >= size) {
             return MovementResult.OverGrid;
         }
 
-        if(x + direction.getX() < 0 || y + direction.getY() < 0) {
+        if (x + direction.getX() < 0 || y + direction.getY() < 0) {
             return MovementResult.OverGrid;
         }
 
         Piece from = pieces[x][y];
 
-        if(from == null) {
+        if (from == null) {
             return MovementResult.OverGrid;
         }
 
         Piece to = pieces[x][y];
 
-        if(to == null) {
+        if (to == null) {
             return MovementResult.OverGrid;
         }
 
-        if(from.getValeur() != -1 || to.getValeur() != -1) {
+        if (from.getValeur() != -1 || to.getValeur() != -1) {
             return MovementResult.HoleNotSelected;
         }
 
@@ -86,7 +86,7 @@ public class Taquin {
         while (i < moves) {
             Direction direction = Direction.values()[rn.nextInt(Direction.values().length)];
 
-            if(tryMovement(x, y, direction) == MovementResult.Success) {
+            if (tryMovement(x, y, direction) == MovementResult.Success) {
                 i++;
                 x += direction.getX();
                 y += direction.getY();
@@ -107,7 +107,7 @@ public class Taquin {
 
             System.out.println(x + " " + y + " " + direction);
 
-            if(tryMovement(x, y, direction) == MovementResult.Success) {
+            if (tryMovement(x, y, direction) == MovementResult.Success) {
                 i++;
             }
 
@@ -117,8 +117,8 @@ public class Taquin {
 
     public String toAsciiTable() {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < size; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 sb.append(pieces[i][j].getValeur()).append("\t");
             }
             sb.append("\n");
@@ -130,9 +130,9 @@ public class Taquin {
     public String toAsciiTableV2() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n-------------------\n");
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             sb.append("| ");
-            for(int j = 0; j < size; j++) {
+            for (int j = 0; j < size; j++) {
                 sb.append(pieces[i][j].getValeur()).append("\t| ");
             }
             sb.append("\n-------------------\n");
@@ -140,4 +140,9 @@ public class Taquin {
 
         return sb.toString();
     }
+
+    // Matys ->
+    // Rajouter addEcouteur, et un compteur de coups
+    // à chaque fois qu'une pièce bouge dans movement(à, appelle fireChangement()
+    // pour prévenir les vues)
 }
