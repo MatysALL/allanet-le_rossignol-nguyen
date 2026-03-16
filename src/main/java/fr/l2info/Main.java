@@ -2,9 +2,6 @@ package fr.l2info;
 
 import fr.l2info.enums.Direction;
 import fr.l2info.model.Taquin;
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
-import org.jline.utils.NonBlockingReader;
 
 import java.io.IOException;
 
@@ -19,7 +16,7 @@ public class Main {
         System.out.println("Après mix");
         System.out.println(taquin.toAsciiTable());
 
-        while(true) {
+        while (true) {
             System.out.print("Enter a direction (Z, Q, S, D): ");
             int ascii = 0; // Waits for Enter!
             try {
@@ -31,10 +28,16 @@ public class Main {
 
             Direction direction = Direction.getFromKey(c);
 
-            if(direction != null) {
+            if (direction != null) {
                 taquin.tryMovement(direction);
                 System.out.println(taquin.toAsciiTable());
             }
         }
+
+        // Matys ->
+        // Créer la fenêtre JFrame
+        // Ajouter la grille
+        // Ajouter le compteur de coups
+        // Ajouter les listeners
     }
 }
