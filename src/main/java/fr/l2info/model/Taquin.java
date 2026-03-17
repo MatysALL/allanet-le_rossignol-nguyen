@@ -5,12 +5,19 @@ import fr.l2info.enums.MovementResult;
 
 import java.util.Random;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Taquin {
     private final int size;
     private final Piece[][] pieces;
 
     private int xHole;
     private int yHole;
+
+    // liste des listeners, et du nombre de coups pour la partie visuelle. ( Matys )
+    private List<EcouteurModele> ecouteurs = new ArrayList<>();
+    private int nbCoups = 0;
 
     public Taquin(int size) {
         this.size = size;
@@ -42,7 +49,7 @@ public class Taquin {
         if (from == null) {
             return MovementResult.OverGrid;
         }
-
+        // là ???
         Piece to = pieces[x][y];
 
         if (to == null) {
@@ -68,6 +75,11 @@ public class Taquin {
         int i = from.getValeur();
         from.setValeur(to.getValeur());
         to.setValeur(i);
+
+        // Incrémenter le nombre de coups ( Matys )
+        this.nbCoups++;
+        // Appeler fireChangement() pour prévenir les vues ( Matys )
+        this.fireChangement();
     }
 
     public void mix() {
@@ -145,4 +157,18 @@ public class Taquin {
     // Rajouter addEcouteur, et un compteur de coups
     // à chaque fois qu'une pièce bouge dans movement(à, appelle fireChangement()
     // pour prévenir les vues)
+
+    public void addEcouteur(EcouteurModele ecouteur) {
+        ecouteurs.add(ecouteur);
+    }
+
+    public void fireChangement() {
+        for (EcouteurModele ecouteur : ecouteurs) {
+            ecouteur.modelMisAJour(this);
+        }
+    }
+
+    public int getNbCoups() {
+        return nbCoups;
+    }
 }
