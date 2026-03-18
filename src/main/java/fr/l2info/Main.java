@@ -24,7 +24,7 @@ public class Main {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            char c = (char) ascii;
+            char c = Character.toLowerCase((char) ascii);
 
             Direction direction = Direction.getFromKey(c);
 
