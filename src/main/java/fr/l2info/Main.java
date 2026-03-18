@@ -15,7 +15,7 @@ public class Main {
         taquin.mixWithDirectionCheck(50);
         long end = System.nanoTime();
         long duration = end - start;
-        long millis = TimeUnit.NANOSECONDS.toMillis(duration);      
+        long millis = TimeUnit.NANOSECONDS.toMillis(duration);
 
         System.out.println("Mélangé en " + millis + "ms\n");
         System.out.println(taquin.toAsciiTable());
