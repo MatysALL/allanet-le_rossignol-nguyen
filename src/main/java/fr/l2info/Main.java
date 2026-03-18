@@ -17,7 +17,7 @@ public class Main {
         long duration = end - start;
         long millis = TimeUnit.NANOSECONDS.toMillis(duration);      
 
-        System.out.println("Après mix");
+        System.out.println("Mélangé en " + millis + "ms\n");
         System.out.println(taquin.toAsciiTable());
 
         while (true) {
