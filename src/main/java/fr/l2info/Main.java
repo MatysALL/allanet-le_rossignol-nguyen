@@ -4,6 +4,7 @@ import fr.l2info.enums.Direction;
 import fr.l2info.model.Taquin;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
