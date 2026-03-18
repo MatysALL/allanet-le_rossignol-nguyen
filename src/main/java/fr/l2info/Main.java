@@ -11,7 +11,11 @@ public class Main {
 
         System.out.println(taquin.toAsciiTable());
 
-        taquin.mix(500);
+        long start = System.nanoTime();
+        taquin.mixWithDirectionCheck(50);
+        long end = System.nanoTime();
+        long duration = end - start;
+        long millis = TimeUnit.NANOSECONDS.toMillis(duration);      
 
         System.out.println("Après mix");
         System.out.println(taquin.toAsciiTable());
