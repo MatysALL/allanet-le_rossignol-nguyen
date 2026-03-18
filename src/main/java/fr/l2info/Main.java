@@ -18,7 +18,7 @@ public class Main {
 
         while (true) {
             System.out.println("Enter une direction (Z, Q, S, D): ");
-            int ascii = 0;
+            int ascii;
             try {
                 ascii = System.in.read();
             } catch (IOException e) {
