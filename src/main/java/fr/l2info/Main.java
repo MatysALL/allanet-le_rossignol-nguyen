@@ -4,6 +4,7 @@ import fr.l2info.enums.Direction;
 import fr.l2info.model.Taquin;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,9 +12,13 @@ public class Main {
 
         System.out.println(taquin.toAsciiTable());
 
-        taquin.mix(500);
+        long start = System.nanoTime();
+        taquin.mixWithDirectionCheck(50);
+        long end = System.nanoTime();
+        long duration = end - start;
+        long millis = TimeUnit.NANOSECONDS.toMillis(duration);
 
-        System.out.println("Après mix");
+        System.out.println("Mélangé en " + millis + "ms\n");
         System.out.println(taquin.toAsciiTable());
 
         while (true) {

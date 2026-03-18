@@ -3,10 +3,7 @@ package fr.l2info.model;
 import fr.l2info.enums.Direction;
 import fr.l2info.enums.MovementResult;
 
-import java.util.Random;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Taquin {
     private final int size;
@@ -92,7 +89,7 @@ public class Taquin {
 
     public void mix() {
         Random rn = new Random();
-        int moves = rn.nextInt(size - 500) + 250;
+        int moves = rn.nextInt(size - 70) + 30;
         mix(moves);
     }
 
@@ -112,6 +109,57 @@ public class Taquin {
                 y += direction.getY();
             }
         }
+    }
+
+    public void mixWithDirectionCheck(int moves) {
+        Random rn = new Random();
+        int i = 0;
+
+        int x = 0;
+        int y = 0;
+
+        while (i < moves) {
+            HashSet<Direction> directions = getPossibleDirections();
+            Direction direction = new ArrayList<>(directions).get(rn.nextInt(directions.size()));
+
+            if (tryMovement(x, y, direction) == MovementResult.Success) {
+                i++;
+                x += direction.getX();
+                y += direction.getY();
+            }
+        }
+    }
+
+    public HashSet<Direction> getPossibleDirections() {
+        HashSet<Direction> directions = new HashSet<>();
+        for (Direction direction : Direction.values()) {
+            if (xHole + direction.getX() >= size || yHole + direction.getY() >= size) {
+                continue;
+            }
+
+            if (xHole + direction.getX() < 0 || yHole + direction.getY() < 0) {
+                continue;
+            }
+
+            directions.add(direction);
+        }
+        return directions;
+    }
+
+    public HashSet<Direction> getPossibleDirections(int x, int y) {
+        HashSet<Direction> directions = new HashSet<>();
+        for (Direction direction : Direction.values()) {
+            if (x + direction.getX() >= size || y + direction.getY() >= size) {
+                continue;
+            }
+
+            if (x + direction.getX() < 0 || y + direction.getY() < 0) {
+                continue;
+            }
+
+            directions.add(direction);
+        }
+        return directions;
     }
 
     @Deprecated
