@@ -89,7 +89,7 @@ public class Taquin {
 
     public void mix() {
         Random rn = new Random();
-        int moves = rn.nextInt(size - 500) + 250;
+        int moves = rn.nextInt(size - 70) + 30;
         mix(moves);
     }
 
