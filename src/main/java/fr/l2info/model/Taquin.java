@@ -147,6 +147,7 @@ public class Taquin {
         return sb.toString();
     }
 
+    @Deprecated
     public String toAsciiTableV2() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n-------------------\n");
