@@ -44,13 +44,13 @@ public class Taquin {
             return MovementResult.OverGrid;
         }
 
-        Piece from = pieces[x][y];
+        Piece from = pieces[y][x];
 
         if (from == null) {
             return MovementResult.OverGrid;
         }
         // là ???
-        Piece to = pieces[x][y];
+        Piece to = pieces[y][x];
 
         if (to == null) {
             return MovementResult.OverGrid;
@@ -70,11 +70,19 @@ public class Taquin {
     }
 
     public void movement(int xFrom, int yFrom, int xTo, int yTo) {
-        Piece from = pieces[xFrom][yFrom];
-        Piece to = pieces[xTo][yTo];
+        Piece from = pieces[yFrom][xFrom];
+        Piece to = pieces[yTo][xTo];
         int i = from.getValeur();
         from.setValeur(to.getValeur());
         to.setValeur(i);
+
+        if(from.getValeur() == -1) {
+            xHole = xFrom;
+            yHole = yFrom;
+        } else {
+            xHole = xTo;
+            yHole = yTo;
+        }
 
         // Incrémenter le nombre de coups ( Matys )
         this.nbCoups++;
@@ -139,6 +147,7 @@ public class Taquin {
         return sb.toString();
     }
 
+    @Deprecated
     public String toAsciiTableV2() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n-------------------\n");

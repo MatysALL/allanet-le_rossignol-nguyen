@@ -17,14 +17,14 @@ public class Main {
         System.out.println(taquin.toAsciiTable());
 
         while (true) {
-            System.out.print("Enter a direction (Z, Q, S, D): ");
-            int ascii = 0; // Waits for Enter!
+            System.out.println("Enter une direction (Z, Q, S, D): ");
+            int ascii;
             try {
                 ascii = System.in.read();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            char c = (char) ascii;
+            char c = Character.toLowerCase((char) ascii);
 
             Direction direction = Direction.getFromKey(c);
 
