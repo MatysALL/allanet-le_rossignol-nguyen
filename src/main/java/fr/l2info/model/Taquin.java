@@ -3,10 +3,7 @@ package fr.l2info.model;
 import fr.l2info.enums.Direction;
 import fr.l2info.enums.MovementResult;
 
-import java.util.Random;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Taquin {
     private final int size;
