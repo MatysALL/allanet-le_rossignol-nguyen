@@ -70,8 +70,8 @@ public class Taquin {
     }
 
     public void movement(int xFrom, int yFrom, int xTo, int yTo) {
-        Piece from = pieces[xFrom][yFrom];
-        Piece to = pieces[xTo][yTo];
+        Piece from = pieces[yFrom][xFrom];
+        Piece to = pieces[yTo][xTo];
         int i = from.getValeur();
         from.setValeur(to.getValeur());
         to.setValeur(i);
