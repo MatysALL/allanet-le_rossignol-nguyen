@@ -44,7 +44,7 @@ public class Taquin {
             return MovementResult.OverGrid;
         }
 
-        Piece from = pieces[x][y];
+        Piece from = pieces[y][x];
 
         if (from == null) {
             return MovementResult.OverGrid;
