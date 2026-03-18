@@ -76,6 +76,14 @@ public class Taquin {
         from.setValeur(to.getValeur());
         to.setValeur(i);
 
+        if(from.getValeur() == -1) {
+            xHole = xFrom;
+            yHole = yFrom;
+        } else {
+            xHole = xTo;
+            yHole = yTo;
+        }
+
         // Incrémenter le nombre de coups ( Matys )
         this.nbCoups++;
         // Appeler fireChangement() pour prévenir les vues ( Matys )
