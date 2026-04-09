@@ -225,6 +225,22 @@ public class Taquin {
         }
     }
 
+    public int getSize()  {
+        return size;
+    }
+
+    public int getXHole() {
+        return xHole;
+    }
+
+    public int getYHole() {
+        return yHole;
+    }
+
+    public int getValeur(int ligne, int colonne) {
+        return pieces[ligne][colonne].getValeur();
+    }
+
     public int getNbCoups() {
         return nbCoups;
     }
