@@ -17,7 +17,7 @@ public class PieceController extends KeyAdapter{
 
     @Override
     public void keyTyped(KeyEvent e) {
-        char c = e.getKeyChar();
+        char c = Character.toLowerCase(e.getKeyChar());
         Direction direction = Direction.getFromKey(c);
         if (direction != null) {
             modele.tryMovement(direction);
