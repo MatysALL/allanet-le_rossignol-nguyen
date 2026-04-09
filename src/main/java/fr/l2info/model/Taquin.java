@@ -19,11 +19,15 @@ public class Taquin {
     public Taquin(int size) {
         this.size = size;
         pieces = new Piece[size][size];
-        int i = -1;
+        int i = 1;
 
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
-                pieces[x][y] = new Piece(i++);
+                if (x == size - 1 && y == size - 1) {
+                    pieces[x][y] = new Piece(-1);
+                } else {
+                    pieces[x][y] = new Piece(i++);
+                }
             }
         }
     }
@@ -225,7 +229,39 @@ public class Taquin {
         }
     }
 
+    public int getSize()  {
+        return size;
+    }
+
+    public int getXHole() {
+        return xHole;
+    }
+
+    public int getYHole() {
+        return yHole;
+    }
+
+    public int getValeur(int ligne, int colonne) {
+        return pieces[ligne][colonne].getValeur();
+    }
+
     public int getNbCoups() {
         return nbCoups;
+    }
+
+    public boolean isResolved() {
+        int prevu = 1;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if(i == size - 1 && j == size - 1) {
+                    return true;
+                }
+
+                if (pieces[i][j].getValeur() != prevu++) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
