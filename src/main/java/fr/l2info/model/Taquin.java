@@ -248,4 +248,20 @@ public class Taquin {
     public int getNbCoups() {
         return nbCoups;
     }
+
+    public boolean isResolved() {
+        int prevu = 1;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if(i == size - 1 && j == size - 1) {
+                    return true;
+                }
+
+                if (pieces[i][j].getValeur() != prevu++) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
