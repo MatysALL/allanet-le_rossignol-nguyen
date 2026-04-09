@@ -1,7 +1,10 @@
 package fr.l2info.controller;
 
-public class PieceController {
-    // Matys ( Pour gérer les listeners )
-    // MouseListener et KeyListener
-    // clique -> tryMovement
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class PieceController extends KeyAdapter{
+
+
 }
