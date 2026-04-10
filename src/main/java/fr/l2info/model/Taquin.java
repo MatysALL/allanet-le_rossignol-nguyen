@@ -19,17 +19,18 @@ public class Taquin {
     public Taquin(int size) {
         this.size = size;
         pieces = new Piece[size][size];
-        int i = 1;
+        int i = 0;
 
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
-                if (x == size - 1 && y == size - 1) {
-                    pieces[y][x] = new Piece(-1);
-                    this.xHole = x;
-                    this.yHole = y;
-                }
+                if (x == size - 1 && y == size - 1)
+                    pieces[x][y] = new Piece(-1); // trou en bas à droite
+                else
+                    pieces[x][y] = new Piece(i++);
             }
         }
+        xHole = size - 1;
+        yHole = size - 1;
     }
 
     public MovementResult tryMovement(Direction direction) {
