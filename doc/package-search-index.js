@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"fr.l2info"},{"l":"fr.l2info.controller"},{"l":"fr.l2info.enums"},{"l":"fr.l2info.model"},{"l":"fr.l2info.view"}];updateSearchResults();
