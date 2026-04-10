@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Classe Main exécutable
+ */
 public class Main {
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("--console")) {

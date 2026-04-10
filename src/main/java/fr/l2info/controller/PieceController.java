@@ -6,6 +6,7 @@ import fr.l2info.model.Taquin;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
 /** Contrôleur ayant pour but de gérer les touches pressés par l'utilisateur
  * pour le déplacement des pièces
  */
@@ -17,6 +18,10 @@ public class PieceController extends KeyAdapter{
         this.modele = modele;
     }
 
+    /**
+     * Enregistrement appui de touche
+     * @param e the event to be processed
+     */
     @Override
     public void keyTyped(KeyEvent e) {
         char c = Character.toLowerCase(e.getKeyChar());
