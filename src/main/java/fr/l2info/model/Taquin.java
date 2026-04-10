@@ -24,9 +24,9 @@ public class Taquin {
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
                 if (x == size - 1 && y == size - 1) {
-                    pieces[x][y] = new Piece(-1);
-                } else {
-                    pieces[x][y] = new Piece(i++);
+                    pieces[y][x] = new Piece(-1);
+                    this.xHole = x;
+                    this.yHole = y;
                 }
             }
         }
@@ -51,13 +51,15 @@ public class Taquin {
             return MovementResult.OverGrid;
         }
         // là ???
-        Piece to = pieces[y][x];
+        int targetX = x + direction.getX();
+        int targetY = y + direction.getY();
+        Piece to = pieces[targetY][targetX];
 
         if (to == null) {
             return MovementResult.OverGrid;
         }
 
-        if (from.getValeur() != -1 || to.getValeur() != -1) {
+        if (from.getValeur() != -1 && to.getValeur() != -1) {
             return MovementResult.HoleNotSelected;
         }
 
