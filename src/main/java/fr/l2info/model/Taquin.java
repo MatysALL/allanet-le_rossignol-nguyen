@@ -135,8 +135,8 @@ public class Taquin {
         Random rn = new Random();
         int i = 0;
 
-        int x = 0;
-        int y = 0;
+        int x = xHole;
+        int y = yHole;
 
         while (i < moves) {
             HashSet<Direction> directions = getPossibleDirections();
