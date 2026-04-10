@@ -16,26 +16,37 @@ public class Taquin {
     private List<EcouteurModele> ecouteurs = new ArrayList<>();
     private int nbCoups = 0;
 
+    /**
+     * Crée un nouveau Taquin de taille size x size
+     * L'état initial a le trou en bas à droite (size-1, size-1) et pièces numérotées de 0 à size²-2
+     */
     public Taquin(int size) {
         this.size = size;
         pieces = new Piece[size][size];
-        int i = 1;
+        int i = 0;
 
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
-                if (x == size - 1 && y == size - 1) {
-                    pieces[y][x] = new Piece(-1);
-                    this.xHole = x;
-                    this.yHole = y;
-                }
+                if (x == size - 1 && y == size - 1)
+                    pieces[x][y] = new Piece(-1); // trou en bas à droite
+                else
+                    pieces[x][y] = new Piece(i++);
             }
         }
+        xHole = size - 1;
+        yHole = size - 1;
     }
 
+    /**
+     * Tente de déplacer la pièce adjacente au trou dans la direction indiquée
+     * La direction est exprimée depuis le trou
+     * (ex : Direction.RIGHT = déplace la pièce à droite du trou vers le trou)
+     */
     public MovementResult tryMovement(Direction direction) {
         return tryMovement(xHole, yHole, direction);
     }
 
+    /** Tente un déplacement depuis (x,y) vers la direction donnée */
     public MovementResult tryMovement(int x, int y, Direction direction) {
         if (x + direction.getX() >= size || y + direction.getY() >= size) {
             return MovementResult.OverGrid;
@@ -72,6 +83,9 @@ public class Taquin {
         movement(x, y, x + direction.getX(), y + direction.getY());
     }
 
+    /** Echange les pièces aux positions (xFrom,yFrom) et (xTo,yTo)
+     * (ignore toutes conditions)
+     * */
     public void movement(int xFrom, int yFrom, int xTo, int yTo) {
         Piece from = pieces[yFrom][xFrom];
         Piece to = pieces[yTo][xTo];
@@ -231,6 +245,24 @@ public class Taquin {
         }
     }
 
+    /** Réinitialise le tableau */
+    public void reset() {
+        int i = 0;
+
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                if (x == size - 1 && y == size - 1)
+                    pieces[x][y] = new Piece(-1); // trou en bas à droite
+                else
+                    pieces[x][y] = new Piece(i++);
+            }
+        }
+        xHole = size - 1;
+        yHole = size - 1;
+        nbCoups = 0;
+    }
+
+    // Getters
     public int getSize()  {
         return size;
     }
@@ -251,6 +283,7 @@ public class Taquin {
         return nbCoups;
     }
 
+    /** Renvoie true si le puzzle est résolu */
     public boolean isResolved() {
         int prevu = 1;
         for (int i = 0; i < size; i++) {
