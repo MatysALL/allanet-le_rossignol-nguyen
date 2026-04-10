@@ -6,7 +6,9 @@ import fr.l2info.model.Taquin;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
+/** Contrôleur ayant pour but de gérer les touches pressés par l'utilisateur
+ * pour le déplacement des pièces
+ */
 public class PieceController extends KeyAdapter{
 
     private final Taquin modele;
