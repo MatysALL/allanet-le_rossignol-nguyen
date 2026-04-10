@@ -8,6 +8,22 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
+        if (args.length > 0 && args[0].equals("--console")) {
+            modeConsole();
+            return;
+        }
+
+        // Matys ->
+        // Créer la fenêtre JFrame
+        // Ajouter la grille
+        // Ajouter le compteur de coups
+        // Ajouter les listeners
+    }
+
+    /**
+     * Mode de jeu en console afin d'effectuer les testes sans interface Swing
+     */
+    private static void modeConsole() {
         Taquin taquin = new Taquin(4);
 
         System.out.println(taquin.toAsciiTable());
@@ -21,7 +37,7 @@ public class Main {
         System.out.println("Mélangé en " + millis + "ms\n");
         System.out.println(taquin.toAsciiTable());
 
-        while (true) {
+        while (!taquin.isResolved()) {
             System.out.println("Enter une direction (Z, Q, S, D): ");
             int ascii;
             try {
@@ -38,11 +54,5 @@ public class Main {
                 System.out.println(taquin.toAsciiTable());
             }
         }
-
-        // Matys ->
-        // Créer la fenêtre JFrame
-        // Ajouter la grille
-        // Ajouter le compteur de coups
-        // Ajouter les listeners
     }
 }
