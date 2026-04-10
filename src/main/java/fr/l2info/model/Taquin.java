@@ -285,7 +285,7 @@ public class Taquin {
 
     /** Renvoie true si le puzzle est résolu */
     public boolean isResolved() {
-        int prevu = 1;
+        int prevu = 0;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if(i == size - 1 && j == size - 1) {
