@@ -40,6 +40,6 @@ public class TaquinGUI extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        modele.nouvellePartie(100);
+        modele.nouvellePartie(50);
     }
 }
