@@ -1,70 +1,132 @@
 package fr.l2info.view;
 
+import fr.l2info.enums.Direction;
 import fr.l2info.model.EcouteurModele;
 import fr.l2info.model.Taquin;
 
 import javax.swing.*;
+
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class GrilleView extends JPanel implements EcouteurModele {
 
     private Color gris = Color.GRAY;
-    private Color vert  = Color.GREEN;
+    private Color vert = Color.GREEN;
     private Color noir = Color.BLACK;
 
-    private int[][] grilleSimulation = {
-            {1, 2, 3, 4},
-            {5, 6, 7, 8},
-            {9, 10, 11, 12},
-            {13, 14, 15, -1} // Le trou est en (3,3)
-    };
+    private int tailleCase = 90;
+    private Taquin modele;
 
-    private final int size = 4;
+    private int survolLigne = -1;
+    private int survolColonne = -1;
 
-    private final int xTrou = 3;
-    private final int yTrou = 3;
+    public GrilleView(Taquin modele) {
+        this.modele = modele;
+        modele.addEcouteur(this);
 
-    public GrilleView() {
-        this.setLayout(new GridLayout(size, size));
-        dessinerGrille();
+        int size = modele.getSize();
+        setPreferredSize(new Dimension(size * tailleCase, size * tailleCase));
+        setBackground(Color.WHITE);
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int col = e.getX() / tailleCase;
+                int row = e.getY() / tailleCase;
+                if (col < size && row < size) {
+                    cliqueSurPiece(row, col);
+                }
+            }
+        });
+
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                int col = e.getX() / tailleCase;
+                int row = e.getY() / tailleCase;
+                if (col != survolColonne || row != survolLigne) {
+                    survolColonne = col;
+                    survolLigne = row;
+                    repaint();
+                }
+            }
+        });
     }
 
-    private void dessinerGrille() {
-        this.removeAll();
-
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
-                int val = grilleSimulation[y][x];
-
-                JButton bouton = new JButton(val == -1 ? "" : String.valueOf(val));
-                bouton.setFont(new Font("Arial", Font.BOLD, 24));
-                bouton.setFocusable(false);
-
-                if (val == -1) { //trou
-                    bouton.setBackground(noir);
-                    bouton.setBorderPainted(false);
-                    bouton.setEnabled(false);
-                } else if (estVoisinDuTrou(x, y)) {
-                    bouton.setBackground(vert);
-                    bouton.setForeground(noir);
-                } else {
-                    bouton.setBackground(gris);
-                    bouton.setForeground(noir);
-                }
-
-                this.add(bouton);
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        int size = modele.getSize();
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                dessinerCase(g, row, col);
             }
         }
-        this.revalidate();
-        this.repaint();
     }
 
-    private boolean estVoisinDuTrou(int x, int y) {
-        return (Math.abs(x - xTrou) + Math.abs(y - yTrou)) == 1;
+    private void dessinerCase(Graphics g, int row, int col) {
+        int val = modele.getValeur(row, col);
+        int x   = col * tailleCase;
+        int y   = row * tailleCase;
+
+        if (val == -1) {
+            g.setColor(noir);
+            g.fillRect(x, y, tailleCase, tailleCase);
+        } else {
+            boolean deplacable = estVoisinDuTrou(row, col);
+            boolean survole    = (survolLigne == row && survolColonne == col);
+
+            g.setColor((deplacable && survole) ? vert : gris);
+            g.fillRect(x, y, tailleCase, tailleCase);
+
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Arial", Font.BOLD, 28));
+            String texte = String.valueOf(val + 1);
+            FontMetrics fm = g.getFontMetrics();
+            int tx = x + (tailleCase - fm.stringWidth(texte)) / 2;
+            int ty = y + (tailleCase - fm.getHeight()) / 2 + fm.getAscent();
+            g.drawString(texte, tx, ty);
+        }
+
+        g.setColor(noir);
+        g.drawRect(x, y, tailleCase - 1, tailleCase - 1);
+    }
+
+    private void cliqueSurPiece(int row, int col) {
+        int xHole = modele.getXHole();
+        int yHole = modele.getYHole();
+        int dx = col - xHole;
+        int dy = row - yHole;
+
+        for (Direction dir : Direction.values()) {
+            if (dir.getX() == dx && dir.getY() == dy) {
+                modele.tryMovement(dir);
+                break;
+            }
+        }
+    }
+
+    private boolean estVoisinDuTrou(int row, int col) {
+        int xHole = modele.getXHole();
+        int yHole = modele.getYHole();
+        return Math.abs(col - xHole) + Math.abs(row - yHole) == 1;
     }
 
     @Override
     public void modelMisAJour(Object source) {
-        // à voir plus tard
+        repaint();
+        if (modele.getNbCoups() > 0 && modele.isResolved()) {
+            SwingUtilities.invokeLater(() ->
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Puzzle résolu en " + modele.getNbCoups() + " coups, tu aurais pu faire mieux !",
+                            "Victoire",
+                            JOptionPane.INFORMATION_MESSAGE
+                    )
+            );
+        }
     }
 }
