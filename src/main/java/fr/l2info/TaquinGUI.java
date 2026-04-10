@@ -37,7 +37,7 @@ public class TaquinGUI extends JFrame {
         setTitle("Taquin");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null); // centrer à l'écran
+        setLocationRelativeTo(null);
         setVisible(true);
 
         modele.nouvellePartie(100);
