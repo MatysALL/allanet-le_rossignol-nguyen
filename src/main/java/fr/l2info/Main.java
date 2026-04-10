@@ -3,6 +3,7 @@ package fr.l2info;
 import fr.l2info.enums.Direction;
 import fr.l2info.model.Taquin;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -12,6 +13,8 @@ public class Main {
             modeConsole();
             return;
         }
+
+        SwingUtilities.invokeLater(() -> new TaquinGUI());
 
         // Matys ->
         // Créer la fenêtre JFrame
