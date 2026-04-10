@@ -54,5 +54,6 @@ public class Main {
                 System.out.println(taquin.toAsciiTable());
             }
         }
+        System.out.println("Bravo ! Résolu en " + taquin.getNbCoups() + " coups.");
     }
 }
