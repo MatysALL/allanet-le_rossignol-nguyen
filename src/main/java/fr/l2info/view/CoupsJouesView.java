@@ -6,12 +6,17 @@ import fr.l2info.model.Taquin;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Affichage nombre de coups joués (en bas à droite)
+ */
 public class CoupsJouesView extends JPanel implements EcouteurModele {
 
     private Taquin modele;
     private JLabel label;
 
-    // Construit avec le nombre de coup à 0.
+    /**
+     * Construit avec le nombre de coup à 0
+     */
     public CoupsJouesView(Taquin modele) {
         this.modele = modele;
         modele.addEcouteur(this);
@@ -21,7 +26,9 @@ public class CoupsJouesView extends JPanel implements EcouteurModele {
         add(label);
     }
 
-    // Quand le modèle est mis à jour, on raffiche le nombre de coups
+    /**
+     * Quand le modèle est mis à jour, on raffiche le nombre de coups
+     */
     @Override
     public void modelMisAJour(Object source) {
         label.setText("Nombre de coups : " + modele.getNbCoups());

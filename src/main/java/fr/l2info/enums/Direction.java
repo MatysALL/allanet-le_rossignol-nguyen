@@ -1,5 +1,8 @@
 package fr.l2info.enums;
 
+/**
+ * Direction vers laquelle peut se déplacer une case (UP, DOWN, LEFT, RIGHT)
+ **/
 public enum Direction {
     UP('z', 0, -1),
     DOWN('s', 0, 1),

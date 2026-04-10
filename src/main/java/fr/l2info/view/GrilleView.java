@@ -11,6 +11,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
+/**
+ * Grille du jeu
+ */
 public class GrilleView extends JPanel implements EcouteurModele {
 
     private Color gris = Color.GRAY;
@@ -20,11 +23,15 @@ public class GrilleView extends JPanel implements EcouteurModele {
     private int tailleCase = 90;
     private Taquin modele;
 
-    // Fonctionnalité Bonus ( poru le survol d'une case jouable ).
+    /**
+     * Survol d'une case jouable (bonus)
+     */
     private int survolLigne = -1;
     private int survolColonne = -1;
 
-    // Construit la grille ( prend un taquin )
+    /**
+     * Construit la grille ( prend un taquin )
+     */
     public GrilleView(Taquin modele) {
         this.modele = modele;
         modele.addEcouteur(this);
@@ -33,7 +40,9 @@ public class GrilleView extends JPanel implements EcouteurModele {
         setPreferredSize(new Dimension(size * tailleCase, size * tailleCase));
         setBackground(Color.WHITE);
 
-        // Evenement d'un clic - clic sur la piece en fonctione de la posiiton de la souris.
+        /**
+         * Evenement d'un clic - clic sur la piece en fonctione de la posiiton de la souris.
+         */
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -45,7 +54,9 @@ public class GrilleView extends JPanel implements EcouteurModele {
             }
         });
 
-        // Ajoute l'evenement pour le survol de la souris
+        /**
+         * Ajoute l'evenement pour le survol de la souris
+         */
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -72,7 +83,9 @@ public class GrilleView extends JPanel implements EcouteurModele {
         }
     }
 
-    // dessine les cases ( lors du paintComponent )
+    /**
+     * dessine les cases ( lors du paintComponent )
+     */
     private void dessinerCase(Graphics g, int row, int col) {
         int val = modele.getValeur(row, col);
         int x   = col * tailleCase;
@@ -101,7 +114,9 @@ public class GrilleView extends JPanel implements EcouteurModele {
         g.drawRect(x, y, tailleCase - 1, tailleCase - 1);
     }
 
-    // Modification du model lorsqu'une pièce est cliqué. ( sort de la boucle une fois que tryMovement est bon )
+    /**
+     * Modification du model lorsqu'une pièce est cliqué ( sort de la boucle une fois que tryMovement est bon )
+     */
     private void cliqueSurPiece(int row, int col) {
         int xHole = modele.getXHole();
         int yHole = modele.getYHole();
@@ -116,14 +131,18 @@ public class GrilleView extends JPanel implements EcouteurModele {
         }
     }
 
-    // Regarde si la case est voisine au trou
+    /**
+     * Regarde si la case est voisine au trou
+     */
     private boolean estVoisinDuTrou(int row, int col) {
         int xHole = modele.getXHole();
         int yHole = modele.getYHole();
         return Math.abs(col - xHole) + Math.abs(row - yHole) == 1;
     }
 
-    // Mise à jour du Modèle classique + renvoie de message de victoire si isResolved renvoie vrai.
+    /**
+     * Mise à jour du Modèle classique + renvoie de message de victoire si isResolved renvoie vrai
+     */
     @Override
     public void modelMisAJour(Object source) {
         repaint();

@@ -8,6 +8,9 @@ import fr.l2info.view.GrilleView;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Interface du jeu
+ */
 public class TaquinGUI extends JFrame {
 
     public TaquinGUI() {

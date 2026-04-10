@@ -5,6 +5,9 @@ import fr.l2info.enums.MovementResult;
 
 import java.util.*;
 
+/**
+ * Modèle du jeu de Taquin
+ */
 public class Taquin {
     private final int size;
     private final Piece[][] pieces;
