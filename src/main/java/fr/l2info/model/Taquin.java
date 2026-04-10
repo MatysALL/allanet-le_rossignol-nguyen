@@ -299,4 +299,11 @@ public class Taquin {
         }
         return true;
     }
+
+    public void nouvellePartie(int nbMouvements) {
+        reset();
+        mixWithDirectionCheck(nbMouvements);
+        nbCoups = 0;
+        fireChangement();
+    }
 }
