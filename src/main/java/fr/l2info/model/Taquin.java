@@ -14,6 +14,7 @@ public class Taquin {
 
     // liste des listeners, et du nombre de coups pour la partie visuelle. ( Matys )
     private List<EcouteurModele> ecouteurs = new ArrayList<>();
+    private boolean enJeu = false;
     private int nbCoups = 0;
 
     /**
@@ -104,15 +105,19 @@ public class Taquin {
         // Incrémenter le nombre de coups ( Matys )
         this.nbCoups++;
         // Appeler fireChangement() pour prévenir les vues ( Matys )
-        this.fireChangement();
+        if (enJeu) {
+            this.fireChangement();
+        }
     }
 
+    /** Appelle la fonction mix en tirant un nombre aléatoire entre 30 et 70 */
     public void mix() {
         Random rn = new Random();
         int moves = rn.nextInt(size - 70) + 30;
         mix(moves);
     }
 
+    /** Permet de mélanger le jeu en jouant des coups aléatoirement, nombre donné en entrée */
     public void mix(int moves) {
         Random rn = new Random();
         int i = 0;
@@ -247,6 +252,7 @@ public class Taquin {
 
     /** Réinitialise le tableau */
     public void reset() {
+        enJeu = false;
         int i = 0;
 
         for (int x = 0; x < size; x++) {
@@ -263,22 +269,33 @@ public class Taquin {
     }
 
     // Getters
+
+    /** Renvoie la taille du jeu */
     public int getSize()  {
         return size;
     }
 
+    /** Renvoie la valeur X de la postion du trou */
     public int getXHole() {
         return xHole;
     }
 
+    /** Renvoie la valeur Y de la postion du trou */
     public int getYHole() {
         return yHole;
     }
 
+    /** Renvoie la valeur d'une case en fonction de la position demandée */
     public int getValeur(int ligne, int colonne) {
         return pieces[ligne][colonne].getValeur();
     }
 
+    /** Renvoie true si l'utilisateur peut jouer */
+    public boolean isEnJeu() {
+        return enJeu;
+    }
+
+    /** Renvoie le nombre de coups joué */
     public int getNbCoups() {
         return nbCoups;
     }
@@ -300,10 +317,12 @@ public class Taquin {
         return true;
     }
 
+    /** Création d'une nouvelle partie */
     public void nouvellePartie(int nbMouvements) {
         reset();
         mixWithDirectionCheck(nbMouvements);
         nbCoups = 0;
+        enJeu = true;
         fireChangement();
     }
 }
